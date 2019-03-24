@@ -1,0 +1,55 @@
+
+/*
+.navbar {
+    height: 80px;
+    padding: 0
+}
+
+.collapse, .navbar-collapse {
+    height: 100%;
+}
+
+.ml-auto, .navbar-nav {
+    height: 100%;
+}
+
+.nav-item {
+
+}
+*/
+
+:root {
+    --color1: #94090D;
+    --color2: #5C0002;
+    --color-footer: #FF1D23;
+}
+
+.navbar {
+    height: 80px;
+}
+
+.bg-light {
+    background-color: var(--color1) !important
+}
+
+.nav-link {
+    font-weight: bold
+}
+
+.card-header {
+    color: white;
+    font-weight: bold;
+    background-color: var(--color2)
+}
+
+.btn-secondary {
+    background-color: var(--color1)
+}
+
+footer {
+    background-color: var(--color-footer);
+}
+
+footer .fab, footer .footer-copyright {
+    color: white
+}
