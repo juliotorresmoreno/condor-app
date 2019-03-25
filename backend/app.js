@@ -1,10 +1,10 @@
-var createError = require('http-errors');
 var express = require('express');
 var path = require('path');
 var cookieParser = require('cookie-parser');
 var logger = require('morgan');
 
 var authRouter = require('./routes/auth');
+var usersRouter = require('./routes/users');
 
 var app = express();
 
@@ -18,7 +18,7 @@ app.use(function (req, res, next) {
     res.setHeader("Access-Control-Allow-Credentials", "true")
     res.setHeader("Access-Control-Allow-Origin", '*')
     res.setHeader("Access-Control-Allow-Methods", "GET,PUT,POST,DELETE,OPTIONS")
-    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Cache-Control")
+    res.setHeader("Access-Control-Allow-Headers", "X-Requested-With,Content-Type,Cache-Control,Authorization")
     if (req.method === 'OPTIONS') {
         res.end();
         return;
@@ -27,6 +27,7 @@ app.use(function (req, res, next) {
 })
 
 app.use('/auth', authRouter);
+app.use('/users', usersRouter)
 
 // catch 404 and forward to error handler
 app.use(function (req, res) {

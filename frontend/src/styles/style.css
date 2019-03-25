@@ -24,10 +24,6 @@
     --color-footer: #FF1D23;
 }
 
-.navbar {
-    height: 80px;
-}
-
 .bg-light {
     background-color: var(--color1) !important
 }
@@ -52,4 +48,49 @@ footer {
 
 footer .fab, footer .footer-copyright {
     color: white
+}
+
+html, body, #root {
+    height: 100%;
+}
+
+#root {
+    display: flex;
+    flex-direction: column
+}
+
+.container.chat-container {
+    flex: 1;
+    padding-top: 20px
+}
+
+.chat-container .row {
+    height: 100%;
+}
+
+.card-conversation {
+    flex: 1;
+    margin-bottom: 15px
+}
+
+.container-card-conversation {
+    height: calc(100% - 20px);
+    display: flex;
+    flex-direction: column;
+}
+
+.chat-input-container {
+    display: flex;
+}
+
+.chat-input-container input {
+    margin-right: 10px
+}
+
+.nav.nav-tabs .nav-link {
+    cursor: pointer;
+}
+
+.nav.nav-tabs {
+    margin-bottom: 10px
 }

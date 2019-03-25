@@ -19,7 +19,7 @@ const initialState: StateProps = {
 export default function (state: any = initialState, action: any) {
     switch (action.type) {
         case auth.logged:
-            return { state, ...action.session };
+            return { ...state, ...action.session };
         case auth.logout:
             return initialState;
         default:

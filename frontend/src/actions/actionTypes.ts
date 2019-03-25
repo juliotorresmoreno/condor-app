@@ -1,6 +1,10 @@
 
 
 const _auth: string = '@auth';
+
+/**
+ * Listado de acciones
+ */
 export const auth = {
 
     /**
@@ -17,4 +21,18 @@ export const auth = {
      * 
      */
     logout: _auth + '/logout'
+}
+
+
+const _users: string = '@users';
+
+/**
+ * 
+ */
+export const users = {
+    
+    /**
+     * 
+     */
+    list: _users + '/list'
 }

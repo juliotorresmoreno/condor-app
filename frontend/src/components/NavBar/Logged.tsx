@@ -17,6 +17,10 @@ interface PropTypes {
 }
 
 interface PropTypesExtend extends PropTypes {
+    auth: {
+        name: string
+        lastname: string
+    }
     dispatch: CallableFunction
 }
 
@@ -25,23 +29,13 @@ interface StateTypes {
 }
 
 const mapProps = (state: any) => ({
-
+    auth: state.auth
 });
 
 /**
  *  NavBar que se debe mostrar cuando el usuario no ha iniciado session
  */
 class OLogged extends PureComponent<PropTypesExtend, any> {
-
-    state: StateTypes = {
-        isOpen: false
-    }
-
-    toggle = () => {
-        this.setState({
-            isOpen: !this.state.isOpen
-        });
-    }
 
     handleLogout = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         evt.preventDefault();
@@ -52,17 +46,17 @@ class OLogged extends PureComponent<PropTypesExtend, any> {
         return (
             <Fragment>
                 <Navbar color="light" light dark expand="md">
-                    <NavbarBrand href="/">{l18n.brand}</NavbarBrand>
-                    <NavbarToggler onClick={this.toggle} />
-                    <Collapse isOpen={this.state.isOpen} navbar>
-                        <Nav className="ml-auto" navbar>
-                            <NavItem className="align-middle">
-                                <Link onClick={this.handleLogout} className="nav-link" to="/logout">
-                                    {l18n.logoutLink}
-                                </Link>
-                            </NavItem>
-                        </Nav>
-                    </Collapse>
+                    <NavbarBrand href="/">
+                        {`${this.props.auth.name} ${this.props.auth.lastname}`}
+                    </NavbarBrand>
+
+                    <Nav className="ml-auto" navbar>
+                        <NavItem className="align-middle">
+                            <Link onClick={this.handleLogout} className="nav-link" to="/logout">
+                                {l18n.logoutLink}
+                            </Link>
+                        </NavItem>
+                    </Nav>
                 </Navbar>
             </Fragment>
         );
@@ -71,6 +65,6 @@ class OLogged extends PureComponent<PropTypesExtend, any> {
 
 const LoggedConnect = connect(mapProps)(OLogged);
 
-const Logged = (props: PropTypes) => <LoggedConnect {...props} />
+const Logged = (props: PropTypes): JSX.Element => <LoggedConnect {...props} />
 
 export default Logged;

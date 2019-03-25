@@ -26,9 +26,8 @@ class Terms extends PureComponent {
         return (
             <Fragment>
                 <NavBarUnlogged />
-                <br />
 
-                <Container style={styles.container}>
+                <Container className='chat-container' style={styles.container}>
                     <header>
                         <h1 style={styles.h1}>{l18n.terms_conditions_title}</h1>
                     </header>

@@ -71,8 +71,7 @@ class OLogin extends PureComponent<PropsTypeExtend, any> {
         return (
             <Fragment>
                 <NavBarUnlogged />
-                <br />
-                <Container style={{ minHeight: 500 }}>
+                <Container className='chat-container' style={{ minHeight: 500 }}>
                     <Row>
                         <Col md={{ size: 6, offset: 3 }} sm={{ size: 12 }} xs={{ size: 12 }}>
                             <Card>

@@ -98,7 +98,7 @@ class Register extends PureComponent<PropsType, any> {
             <Fragment>
                 <NavBarUnlogged />
                 <br />
-                <Container>
+                <Container className='chat-container'>
                     <Row>
                         <Col md={{ size: 6 }} sm={{ size: 12 }} xs={{ size: 12 }}>
                             <img style={{ width: '100%' }} src={hires_png} />
