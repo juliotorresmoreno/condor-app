@@ -3,9 +3,9 @@ var router = express.Router();
 var l18n = require('../l18n').default;
 var mongoConnect = require('../db').connect;
 var hash = require('../utils/hash');
-var axios = require('axios');
 var config = require('../config');
 var UUID = require('uuid');
+var redis = require('redis');
 
 class UserError extends Error {
     constructor(props) {
@@ -88,7 +88,8 @@ router.post('/register', function (req, res, next) {
         lastname: '',
         username: '',
         email: '',
-        password: ''
+        password: '',
+        created_at: new Date()
     };
     data = Object.assign(data, req.body);
     validate(data)
@@ -178,29 +179,38 @@ router.post('/login', async function (req, res) {
             }
             var token = UUID();
             try {
-                await axios.put(`${config.sessions_storage}/${token}`, {
-                    value: data[0].username
-                });
-                res.json({
-                    success: true,
-                    data: {
-                        token: token,
-                        username: data[0].username,
-                        name: data[0].name,
-                        lastname: data[0].lastname,
-                        email: data[0].email
+                var client = redis.createClient(config.sessions_storage);
+                client.SET(token, data[0]._id, function (err) {
+                    client.quit();
+                    if (err) {
+                        console.trace(err);
+                        res.status(500);
+                        res.json({
+                            success: false
+                        });
+                        return;
                     }
+                    res.json({
+                        success: true,
+                        data: {
+                            token: token,
+                            username: data[0].username,
+                            name: data[0].name,
+                            lastname: data[0].lastname,
+                            email: data[0].email
+                        }
+                    });
                 });
-            } catch (error) {
-                console.trace(error);
+            } catch (err) {
+                console.trace(err);
                 res.status(500);
                 res.json({
                     success: false
                 });
             }
         });
-    } catch (error) {
-        console.trace(error);
+    } catch (err) {
+        console.trace(err);
         res.status(500);
         res.json({
             success: false

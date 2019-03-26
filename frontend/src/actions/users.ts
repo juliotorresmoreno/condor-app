@@ -6,7 +6,7 @@ import { UserList } from '../reducers/users';
 
 const meta = server_url + '/users';
 
-const setList = (list: UserList) => ({
+export const setList = (list: UserList) => ({
     type: users.list,
     users: list
 });

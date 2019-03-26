@@ -1,4 +1,3 @@
-
 /*
 .navbar {
     height: 80px;
@@ -93,4 +92,30 @@ html, body, #root {
 
 .nav.nav-tabs {
     margin-bottom: 10px
+}
+
+.container-user-list {
+    display: flex;
+    flex-direction: column
+}
+
+.container-user-list .list, .container-user-list .tab-content {
+    flex: 1
+}
+
+.tab-pane.container-user-list {
+    height: 100%;
+    padding-bottom: 10px;
+    display: flex;
+    flex-direction: column
+}
+
+.list-group-item {
+    cursor: pointer;
+}
+
+.chatMe {
+    display: inline;
+    font-weight: bold;
+    font-size: 18px
 }

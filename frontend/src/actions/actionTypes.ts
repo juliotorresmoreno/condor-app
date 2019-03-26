@@ -1,3 +1,4 @@
+import { setCache } from "./chats";
 
 
 const _auth: string = '@auth';
@@ -24,6 +25,7 @@ export const auth = {
 }
 
 
+
 const _users: string = '@users';
 
 /**
@@ -36,3 +38,40 @@ export const users = {
      */
     list: _users + '/list'
 }
+
+
+
+const _friends: string = '@friends';
+
+/**
+ * 
+ */
+export const friends = {
+    
+    /**
+     * 
+     */
+    list: _friends + '/list'
+}
+
+
+
+const _chats: string = '@chats';
+
+/**
+ * 
+ */
+export const chats = {
+    
+    /**
+     * 
+     */
+    list: _chats + '/list',
+
+
+    /**
+     * 
+     */
+    setCache: _chats + '/setCache'
+}
+

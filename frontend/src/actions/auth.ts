@@ -3,13 +3,15 @@
 import { auth } from './actionTypes';
 import { server_url } from '../config';
 import { IUser, IUserError } from '../models/User';
-
+import { setList as usersSetList } from './users';
+import { setList as friendsSetList } from './friends';
 interface ILogin {
     email: string
     password: string
 }
 
 const meta = server_url + '/auth';
+const meta_session = server_url + '/session';
 
 interface SessionProps {
     token: string
@@ -84,4 +86,23 @@ export const register = (user: IUser) =>
             .catch((error: Error) => {
                 return Promise.reject(error);
             });
+    }
+
+
+export const session = () =>
+    async (dispatchEvent: CallableFunction, getState: CallableFunction) => {
+        const state = getState();
+        const response = await fetch(meta_session, {
+            headers: {
+                'Authorization': state.auth.token
+            }
+        });
+        if (response.ok) {
+            const result: { session: any, users: Array<any> } = await response.json();
+            dispatchEvent(logged(result.session));
+            dispatchEvent(usersSetList(result.users));
+            dispatchEvent(friendsSetList(result.users));
+            return;
+        }
+        dispatchEvent(logout());
     }

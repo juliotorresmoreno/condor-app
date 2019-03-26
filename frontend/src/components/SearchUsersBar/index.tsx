@@ -27,7 +27,7 @@ const styles: StylesProps = {
     }
 }
 
-class OSearchBar extends PureComponent<PropsTypeExtend, any> {
+class OSearchUsersBar extends PureComponent<PropsTypeExtend, any> {
 
     state = {
         q: ''
@@ -37,14 +37,18 @@ class OSearchBar extends PureComponent<PropsTypeExtend, any> {
         this.setState({
             q: evt.target.value
         });
+        if (evt.target.value.length < 3) {
+            this.props.dispatch(users.setList([]));
+            return;
+        }
         this.props.dispatch(users.list(evt.target.value));
     }
 
     render() {
         return (
             <Fragment>
-                <Input 
-                    type='search' 
+                <Input
+                    type='search'
                     value={this.state.q}
                     onChange={this.handleChange}
                     style={styles.search_bar} />
@@ -53,12 +57,12 @@ class OSearchBar extends PureComponent<PropsTypeExtend, any> {
     }
 }
 
-export const SearchBarConnected = connect(mapProps)(OSearchBar);
+export const SearchUsersBarConnected = connect(mapProps)(OSearchUsersBar);
 
 
 /**
  * fdf
  */
-const SearchBar = (props: PropsType): JSX.Element => <SearchBarConnected {...props} />
+const SearchUsersBar = (props: PropsType): JSX.Element => <SearchUsersBarConnected {...props} />
 
-export default SearchBar;
+export default SearchUsersBar;

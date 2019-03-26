@@ -13,5 +13,16 @@ module.exports = {
                 });
             })
         });
+    },
+    chat_connect: function () {
+        return new Promise(function (resolve, reject) {
+            MongoClient.connect(config.chat_dsn, function (err, client) {
+                if (err) return reject(err);
+                resolve({
+                    conn: client,
+                    db: client.db(client.s.options.dbName)
+                });
+            })
+        });
     }
 }

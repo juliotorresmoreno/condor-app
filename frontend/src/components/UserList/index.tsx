@@ -1,18 +1,20 @@
 
 
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent } from "react";
 import ListGroup from "reactstrap/lib/ListGroup";
 import ListGroupItem from "reactstrap/lib/ListGroupItem";
 import { connect } from 'react-redux';
-import { UserList as DUserList } from "../../reducers/users";
+import { UserList as TUserList } from "../../reducers/users";
+import { FriendList } from "../../reducers/friends";
 
 interface PropsType {
     onChangeSelect: CallableFunction
 }
 
 interface PropsTypeExtend extends PropsType {
-    userList: DUserList
     dispatch: CallableFunction
+    userList: TUserList
+    friendList: FriendList
 }
 
 interface StateProps {
@@ -20,7 +22,8 @@ interface StateProps {
 }
 
 const mapProps = (state: any) => ({
-    userList: state.users.list
+    userList: state.users.list,
+    friendList: state.friends.list
 });
 
 class OUserList extends PureComponent<PropsTypeExtend> {
@@ -39,19 +42,18 @@ class OUserList extends PureComponent<PropsTypeExtend> {
         }
 
     render() {
+        const userList = this.props.userList;
         return (
-            <Fragment>
-                <ListGroup>
-                    {this.props.userList.map((value, key) => (
-                        <ListGroupItem
-                            key={key} tag="a" href=""
-                            active={this.state.active === value.username}
-                            onClick={this.handleClick(value.username)}>
-                            {value.name} {value.lastname}
-                        </ListGroupItem>
-                    ))}
-                </ListGroup>
-            </Fragment>
+            <ListGroup>
+                {userList.map((value, key) => (
+                    <ListGroupItem
+                        key={key}
+                        active={this.state.active === value.username}
+                        onClick={this.handleClick(value.username)}>
+                        {value.name} {value.lastname}
+                    </ListGroupItem>
+                ))}
+            </ListGroup>
         );
     }
 }

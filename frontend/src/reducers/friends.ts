@@ -1,17 +1,17 @@
 
 
-import { users } from '../actions/actionTypes';
+import { friends } from '../actions/actionTypes';
 
-export interface User {
+export interface Friend {
     name: string
     lastname: string
     username: string
 }
 
-export interface UserList extends Array<User> { }
+export interface FriendList extends Array<Friend> { }
 
 export interface StateProps {
-    list: UserList
+    list: FriendList
 }
 
 const initialState: StateProps = {
@@ -20,7 +20,7 @@ const initialState: StateProps = {
 
 export default function (state: StateProps = initialState, action: any) {
     switch (action.type) {
-        case users.list:
+        case friends.list:
             return { ...state, list: action.users };
         default:
             return state;
