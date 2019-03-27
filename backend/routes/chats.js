@@ -4,7 +4,7 @@ var express = require('express');
 var router = express.Router();
 var { connect: mongoConnect, chat_connect: chatConnect } = require('../db');
 var ObjectID = require('mongodb').ObjectID;
-
+var send = require('../routes/ws').send;
 
 /* GET chats listing. */
 router.get('/', async function (req, res, next) {
@@ -150,10 +150,27 @@ router.post('/:id', async function (req, res) {
         const chat = await db.collection('chats').findOne({ _id: ObjectID(chat_id) });
         if (chat && chat.users.includes(req.session.username)) {
 
-            await db_chat.collection(`chat_${chat_id}`).insertOne({
+            const message = {
                 user: req.session.username,
                 text: text,
                 created_at: new Date()
+            };
+            const message_id = await db_chat.collection(`chat_${chat_id}`).insertOne(message);
+
+            console.log(chat.users);
+            chat.users.forEach(function (username) {
+                send(
+                    req.session.username,
+                    username,
+                    {
+                        type: '@chats/message',
+                        chatID: chat_id,
+                        message: {
+                            _id: message_id.insertedId,
+                            ...message
+                        }
+                    }
+                )
             });
 
             res.json({

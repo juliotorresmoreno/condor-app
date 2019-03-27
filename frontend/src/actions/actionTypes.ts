@@ -72,6 +72,11 @@ export const chats = {
     /**
      * 
      */
-    setCache: _chats + '/setCache'
+    setCache: _chats + '/setCache',
+
+    /**
+     * 
+     */
+    message: _chats + '/message'
 }
 

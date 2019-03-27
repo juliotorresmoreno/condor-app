@@ -44,6 +44,7 @@ export const login = (user: ILogin) =>
                     .then((result) => {
                         if (response.ok) {
                             dispatch(logged(result.data));
+                            dispatch(session());
                             return Promise.resolve();
                         }
                         return Promise.reject(new Error(result.message));

@@ -7,6 +7,7 @@ import Button from 'reactstrap/lib/Button';
 import * as chats from '../../actions/chats';
 import { Message } from '../../reducers/chats';
 import { StateProps as AuthProps } from '../../reducers/auth';
+import { FriendList } from '../../reducers/friends';
 
 interface PropsType {
     chatID: string
@@ -16,6 +17,7 @@ interface PropsType {
 interface PropsTypeExtend extends PropsType {
     dispatch: CallableFunction
     chatsCache: any
+    friendList: FriendList
     auth: AuthProps
 }
 
@@ -25,7 +27,8 @@ interface StateProps {
 
 const mapProps = (state: any) => ({
     auth: state.auth,
-    chatsCache: state.chats.cache
+    chatsCache: state.chats.cache,
+    friendList: state.friends.list
 });
 
 class OConversation extends PureComponent<PropsTypeExtend, any> {
@@ -38,10 +41,15 @@ class OConversation extends PureComponent<PropsTypeExtend, any> {
         text: ''
     }
 
+    elem: HTMLDivElement | null = null;
+
     componentDidUpdate() {
         //if (!this.props.chatsCache[this.props.chatID]) {
         //this.props.dispatch(chats.load(this.props.chatID));
         //}
+        if (this.elem !== null) {
+            this.elem.scrollTop = 1000 * 1000 * 1000;
+        }
     }
 
     handleChange = (evt: React.ChangeEvent<HTMLInputElement>) => {
@@ -67,11 +75,19 @@ class OConversation extends PureComponent<PropsTypeExtend, any> {
         });
     }
 
+    getUserName = (username: string): string => {
+        const user = this.props.friendList.find(x => x.username === username);
+        if (user) {
+            return `${user.name} ${user.lastname}`;
+        }
+        return 'Unknow';
+    }
+
     renderMessage = (message: Message, key: number) => (
         <Fragment key={key}>
             {this.props.auth.username === message.user ?
                 (
-                    <div>
+                    <div className='message-text-left'>
                         <span className="chatMe">
                             {this.props.auth.name} {this.props.auth.lastname}
                         </span>:{' '}
@@ -79,10 +95,10 @@ class OConversation extends PureComponent<PropsTypeExtend, any> {
                     </div>
                 ) :
                 (
-                    <div>
+                    <div className='message-text-right'>
                         {message.text} :
                         <span className="chatMe">
-                            {this.props.auth.name} {this.props.auth.lastname}:
+                            {this.getUserName(message.user)}
                         </span>
                     </div>
                 )}
@@ -91,11 +107,14 @@ class OConversation extends PureComponent<PropsTypeExtend, any> {
 
     render() {
         const messages = this.props.chatsCache[this.props.chatID] || [];
+        const height = document.documentElement.offsetHeight;
         return (
             <Fragment>
                 <div className="container-card-conversation">
                     <Card body className="card-conversation">
-                        {messages.map(this.renderMessage)}
+                        <div ref={(elem) => this.elem = elem} style={{ height: height - 190, overflowY: 'scroll' }}>
+                            {messages.map(this.renderMessage)}
+                        </div>
                     </Card>
 
                     <div className="chat-input-container">

@@ -26,12 +26,19 @@ const initialState: StateProps = {
 };
 
 export default function (state: StateProps = initialState, action: any) {
+    let cache;
     switch (action.type) {
         case chats.list:
             return { ...state, list: action.chats };
         case chats.setCache:
-            let cache = state.cache;
+            cache = state.cache;
             cache[action.chatID] = action.messages;
+            return { ...state, cache: { ...cache } }
+        case chats.message:
+            cache = state.cache;
+            if (!cache[action.chatID])
+                cache[action.chatID] = [];
+            cache[action.chatID].push(action.message);
             return { ...state, cache: { ...cache } }
         default:
             return state;
