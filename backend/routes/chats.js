@@ -157,7 +157,6 @@ router.post('/:id', async function (req, res) {
             };
             const message_id = await db_chat.collection(`chat_${chat_id}`).insertOne(message);
 
-            console.log(chat.users);
             chat.users.forEach(function (username) {
                 send(
                     req.session.username,
@@ -201,9 +200,78 @@ router.post('/:id', async function (req, res) {
     }
 });
 
+router.put('/:id/append', async function (req, res) {
+    const chat_id = req.params.id;
+    const user = req.body.user || '';
+
+    if (!user) {
+        res.status(401);
+        res.json({
+            success: false
+        });
+        return;
+    }
+
+    var client;
+    try {
+        client = await mongoConnect();
+    } catch (error) {
+        console.trace(error);
+        res.status(500);
+        res.json({
+            success: false
+        });
+        return;
+    }
+
+    const { conn, db } = client;
+
+    try {
+        const query = { _id: ObjectID(chat_id) };
+        const chat = await db.collection('chats').findOne(query);
+
+        if (chat && chat.users.includes(req.session.username)) {
+            const users = chat.users.slice(0);
+            if (!users.includes(user)) {
+                users.push(user);
+                users.forEach(function (username) {
+                    send(req.session.username, username, { type: '@chats/reload' });
+                });
+                await db.collection('chats').update(query, { $set: { users } });
+
+                const _user = await db.collection('users').findOne({ username: user });
+                _user.chats = _user.chats || [];
+                _user.chats.push(ObjectID(chat_id));
+
+                await db.collection('users').update({ username: user }, { $set: {
+                    chats: _user.chats
+                } });
+            }
+
+            res.json({ success: true });
+            conn.close();
+            return;
+        }
+
+        res.status(401);
+        res.json({
+            success: false
+        });
+
+        conn.close();
+    } catch (error) {
+        console.trace(error);
+        res.status(500);
+        res.json({
+            success: false
+        });
+        conn.close();
+        return;
+    }
+});
+
 router.get('/:id', async function (req, res) {
     const chat_id = req.params.id;
-    const text = req.body.text;
     var chat_client;
     try {
         chat_client = await chatConnect();

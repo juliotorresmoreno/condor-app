@@ -6,7 +6,7 @@ import * as users from '../../actions/users';
 import { connect } from 'react-redux';
 
 interface PropsType {
-
+    style?: CSSProperties
 }
 
 interface PropsTypeExtend extends PropsType {

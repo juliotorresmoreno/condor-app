@@ -30,4 +30,6 @@ export interface Language {
     terms_conditions_body: string | JSX.Element
 
     error_email_is_required: string
+
+    add_user_form: string
 }

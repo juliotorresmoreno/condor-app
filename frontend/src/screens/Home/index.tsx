@@ -1,9 +1,9 @@
 
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent, Fragment, CSSProperties } from "react";
 import { NavBarLogged } from "../../components/NavBar";
 import Container from "reactstrap/lib/Container";
 import Row from "reactstrap/lib/Row";
-import { Col } from "reactstrap";
+import Col from "reactstrap/lib/Col";
 import Conversation from "../../components/Conversation";
 import SearchUsersBar from "../../components/SearchUsersBar";
 import UserList from "../../components/UserList";
@@ -16,7 +16,7 @@ import TabPane from "reactstrap/lib/TabPane";
 import * as chats from '../../actions/chats';
 import { connect } from 'react-redux';
 import ChatList from "../../components/ChatList";
-import WebSocketEvent from "../../components/WebSocketEvent";
+import UserAdd from "../../components/Dialog/UserAdd";
 
 interface PropsType {
 
@@ -35,6 +35,25 @@ const mapProps = (state: any) => ({
     chatList: state.chats.list
 });
 
+interface StylesProps {
+    conversation: CSSProperties
+    conversation_container: CSSProperties
+    actions: CSSProperties
+}
+
+const styles: StylesProps = {
+    conversation_container: {
+        display: 'flex',
+        flex: 1
+        //flexDirection: 'column'
+    },
+    conversation: {
+        flex: 1
+    },
+    actions: {
+        marginRight: 10
+    }
+}
 class OHome extends PureComponent<PropsTypeExtend, any> {
 
     state: StateProps = {
@@ -53,7 +72,7 @@ class OHome extends PureComponent<PropsTypeExtend, any> {
     }
 
     handleChangeChatSelect = (chatID: string) => {
-        this.setState({ activeChat: chatID }); 
+        this.setState({ activeChat: chatID });
         this.props.dispatch(chats.load(chatID));
     }
 
@@ -74,8 +93,12 @@ class OHome extends PureComponent<PropsTypeExtend, any> {
 
                 <Container className="chat-container">
                     <Row>
-                        <Col md={{ size: 8 }}>
+                        <Col style={styles.conversation_container} md={{ size: 8 }}>
+                            <div style={styles.actions}>
+                                <UserAdd chatID={this.state.activeChat} />
+                            </div>
                             <Conversation
+                                style={styles.conversation}
                                 chatID={this.state.activeChat}
                                 disabled={activeChat === ''} />
                         </Col>
@@ -86,6 +109,8 @@ class OHome extends PureComponent<PropsTypeExtend, any> {
                                         className={classnames({ active: activeTab === '1' })}
                                         onClick={this.toggle('1')}
                                     >
+                                        <i className="far fa-comments"></i>
+                                        &nbsp;
                                         Chats
                                     </NavLink>
                                 </NavItem>
@@ -94,6 +119,8 @@ class OHome extends PureComponent<PropsTypeExtend, any> {
                                         className={classnames({ active: activeTab === '2' })}
                                         onClick={this.toggle('2')}
                                     >
+                                        <i className="fas fa-search"></i>
+                                        &nbsp;
                                         Ecuentra gente
                                     </NavLink>
                                 </NavItem>

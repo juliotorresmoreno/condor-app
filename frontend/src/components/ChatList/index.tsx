@@ -35,6 +35,7 @@ class OChatList extends PureComponent<PropsTypeExtend, any> {
 
     renderUsers = (chat: ChatItem): JSX.Element => {
         const friendList = this.props.friendList;
+        var count = 0;
         return (
             <Fragment>
                 {chat.users.map((username: string, key: number) => {
@@ -44,10 +45,20 @@ class OChatList extends PureComponent<PropsTypeExtend, any> {
                         x.username === username
                     );
                     if (!user) return false;
+                    count++;
                     return (
-                        <span key={key}>
-                            {user.name} {user.lastname}
-                        </span>
+                        <Fragment>
+                            {count > 1 ? (
+                                <Fragment>
+                                    ,&nbsp;
+                                </Fragment>
+                            ) : false}
+                            <span key={key}>
+                                <i className="far fa-user"></i>
+                                &nbsp;
+                                {user.name} {user.lastname}
+                            </span>
+                        </Fragment>
                     );
                 })}
             </Fragment>

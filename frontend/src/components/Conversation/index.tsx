@@ -1,5 +1,5 @@
 
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent, Fragment, CSSProperties } from 'react';
 import { connect } from 'react-redux';
 import Card from 'reactstrap/lib/Card';
 import Input from 'reactstrap/lib/Input';
@@ -12,6 +12,7 @@ import { FriendList } from '../../reducers/friends';
 interface PropsType {
     chatID: string
     disabled?: boolean
+    style?: CSSProperties
 }
 
 interface PropsTypeExtend extends PropsType {
@@ -110,7 +111,7 @@ class OConversation extends PureComponent<PropsTypeExtend, any> {
         const height = document.documentElement.offsetHeight;
         return (
             <Fragment>
-                <div className="container-card-conversation">
+                <div style={this.props.style} className="container-card-conversation">
                     <Card body className="card-conversation">
                         <div ref={(elem) => this.elem = elem} style={{ height: height - 190, overflowY: 'scroll' }}>
                             {messages.map(this.renderMessage)}
@@ -126,7 +127,7 @@ class OConversation extends PureComponent<PropsTypeExtend, any> {
                         <Button
                             onClick={this.handleClickSend}
                             disabled={this.props.disabled}>
-                            Send
+                            <i className="fas fa-paper-plane"></i>
                         </Button>
                     </div>
                 </div>

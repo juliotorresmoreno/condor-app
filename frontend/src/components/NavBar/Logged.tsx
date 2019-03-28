@@ -47,12 +47,16 @@ class OLogged extends PureComponent<PropTypesExtend, any> {
             <Fragment>
                 <Navbar color="light" light dark expand="md">
                     <NavbarBrand href="/">
+                        <i className="fas fa-home"></i>
+                        &nbsp;
                         {`${this.props.auth.name} ${this.props.auth.lastname}`}
                     </NavbarBrand>
 
                     <Nav className="ml-auto" navbar>
                         <NavItem className="align-middle">
                             <Link onClick={this.handleLogout} className="nav-link" to="/logout">
+                                <i className="fas fa-sign-out-alt"></i>
+                                &nbsp;
                                 {l18n.logoutLink}
                             </Link>
                         </NavItem>

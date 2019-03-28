@@ -50,6 +50,8 @@ class OUserList extends PureComponent<PropsTypeExtend> {
                         key={key}
                         active={this.state.active === value.username}
                         onClick={this.handleClick(value.username)}>
+                        <i className="far fa-user"></i>
+                        &nbsp;
                         {value.name} {value.lastname}
                     </ListGroupItem>
                 ))}

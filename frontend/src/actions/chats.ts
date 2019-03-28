@@ -79,7 +79,7 @@ export const post = (chatID: string, text: string) =>
 
 export const setCache = (chatID: string, messages: Array<any>) => ({
     type: chats.setCache,
-    chatID, 
+    chatID,
     messages
 });
 
@@ -98,3 +98,23 @@ export const load = (chatID: string) =>
         }
         throw new Error(result.message);
     }
+
+export const appendUser = (chatID: string, username: string) =>
+    async (dispatchEvent: CallableFunction, getState: CallableFunction) => {
+        const state = getState();
+        const response = await fetch(`${meta}/${chatID}/append`, {
+            method: 'PUT',
+            headers: {
+                Authorization: state.auth.token,
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify({ user: username })
+        });
+        const result = await response.json();
+        if (response.ok) {
+
+            return;
+        }
+        throw new Error(result.message);
+    }
+

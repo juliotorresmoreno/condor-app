@@ -62,7 +62,9 @@ const lang: Language = {
         </Fragment>
     ),
 
-    error_email_is_required: 'El email es obligatorio'
+    error_email_is_required: 'El email es obligatorio',
+
+    add_user_form: 'Add user'
 }
 
 export default lang;
