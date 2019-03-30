@@ -58,9 +58,10 @@ html, body, #root {
     flex-direction: column
 }
 
-.container.chat-container {
+.container.chat-container, .container.profile-container {
     flex: 1;
-    padding-top: 20px
+    padding-top: 20px;
+    padding-bottom: 20px
 }
 
 .chat-container .row {

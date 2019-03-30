@@ -1,9 +1,6 @@
 import React, { PureComponent, Fragment } from 'react';
 import {
-    Collapse,
     Navbar,
-    NavbarToggler,
-    NavbarBrand,
     Nav,
     NavItem
 } from 'reactstrap';
@@ -11,20 +8,38 @@ import { Link } from 'react-router-dom';
 import l18n from '../../l18n';
 import * as auth from '../../actions/auth';
 import { connect } from 'react-redux';
+import { IPromise } from 'q';
+import DialogProfile from '../Dialog/DialogProfile';
 
 interface PropTypes {
 
 }
 
 interface PropTypesExtend extends PropTypes {
+
+    /**
+     * 
+     */
     auth: {
+
+        /**
+         * 
+         */
         name: string
+
+        /**
+         * 
+         */
         lastname: string
     }
-    dispatch: CallableFunction
+
+    /**
+     * 
+     */
+    dispatch: (action: CallableFunction | any) => void
 }
 
-interface StateTypes {
+interface StateProps {
     isOpen: boolean
 }
 
@@ -37,20 +52,34 @@ const mapProps = (state: any) => ({
  */
 class OLogged extends PureComponent<PropTypesExtend, any> {
 
+    state: StateProps = {
+        isOpen: false
+    }
+
     handleLogout = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         evt.preventDefault();
-        this.props.dispatch(auth.logout())
+        this.props.dispatch(auth.logout());
+    }
+
+    handleProfile = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
+        evt.preventDefault();
+        this.setState({
+            isOpen: !this.state.isOpen
+        });
     }
 
     render() {
         return (
             <Fragment>
+                <DialogProfile
+                    isOpen={this.state.isOpen} />
+
                 <Navbar color="light" light dark expand="md">
-                    <NavbarBrand href="/">
+                    <Link className="navbar-brand" to="/" onClick={this.handleProfile}>
                         <i className="fas fa-home"></i>
                         &nbsp;
                         {`${this.props.auth.name} ${this.props.auth.lastname}`}
-                    </NavbarBrand>
+                    </Link>
 
                     <Nav className="ml-auto" navbar>
                         <NavItem className="align-middle">

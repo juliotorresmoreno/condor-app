@@ -6,7 +6,6 @@ import Button from "reactstrap/lib/Button";
 import Modal from "reactstrap/lib/Modal";
 import ModalBody from "reactstrap/lib/ModalBody";
 import ModalFooter from "reactstrap/lib/ModalFooter";
-import l18n from '../../l18n';
 import UserList from "../UserList";
 import SearchUsersBar from "../SearchUsersBar";
 import * as chats from '../../actions/chats';
@@ -47,7 +46,7 @@ const styles: StylesProps = {
     }
 };
 
-class OUserAdd extends PureComponent<PropsTypeExtend, any> {
+class ODialogUserAdd extends PureComponent<PropsTypeExtend, any> {
 
     state: StateProps = {
         isOpen: false,
@@ -111,9 +110,9 @@ class OUserAdd extends PureComponent<PropsTypeExtend, any> {
     }
 }
 
-const UserAddConnected = connect(mapProps)(OUserAdd);
+const DialogUserAddConnected = connect(mapProps)(ODialogUserAdd);
 
-const UserAdd = (props: PropsType) => <UserAddConnected {...props} />;
+const DialogUserAdd = (props: PropsType) => <DialogUserAddConnected {...props} />;
 
-export default UserAdd;
+export default DialogUserAdd;
 

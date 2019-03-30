@@ -16,7 +16,8 @@ import TabPane from "reactstrap/lib/TabPane";
 import * as chats from '../../actions/chats';
 import { connect } from 'react-redux';
 import ChatList from "../../components/ChatList";
-import UserAdd from "../../components/Dialog/UserAdd";
+import DialogUserAdd from "../../components/Dialog/DialogUserAdd";
+import { resolve } from "url";
 
 interface PropsType {
 
@@ -95,7 +96,7 @@ class OHome extends PureComponent<PropsTypeExtend, any> {
                     <Row>
                         <Col style={styles.conversation_container} md={{ size: 8 }}>
                             <div style={styles.actions}>
-                                <UserAdd chatID={this.state.activeChat} />
+                                <DialogUserAdd chatID={this.state.activeChat} />
                             </div>
                             <Conversation
                                 style={styles.conversation}
@@ -112,7 +113,7 @@ class OHome extends PureComponent<PropsTypeExtend, any> {
                                         <i className="far fa-comments"></i>
                                         &nbsp;
                                         Chats
-                                    </NavLink>
+                                        </NavLink>
                                 </NavItem>
                                 <NavItem>
                                     <NavLink
@@ -122,7 +123,7 @@ class OHome extends PureComponent<PropsTypeExtend, any> {
                                         <i className="fas fa-search"></i>
                                         &nbsp;
                                         Ecuentra gente
-                                    </NavLink>
+                                        </NavLink>
                                 </NavItem>
                             </Nav>
                             <TabContent activeTab={activeTab}>
