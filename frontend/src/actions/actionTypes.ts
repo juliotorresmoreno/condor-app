@@ -1,4 +1,3 @@
-import { setCache } from "./chats";
 
 
 const _auth: string = '@auth';
@@ -78,5 +77,20 @@ export const chats = {
      * 
      */
     message: _chats + '/message'
+}
+
+
+
+const _profile: string = '@profile';
+
+/**
+ * 
+ */
+export const profile = {
+
+    /**
+     * 
+     */
+    update: _profile + '/update'
 }
 

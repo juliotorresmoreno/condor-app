@@ -23,7 +23,7 @@ interface StylesProps {
 
 const styles: StylesProps = {
     search_bar: {
-        marginBottom: 10
+        
     }
 }
 

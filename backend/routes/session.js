@@ -4,6 +4,8 @@ var express = require('express');
 var ObjectID = require('mongodb').ObjectID;
 var router = express.Router();
 var { connect: mongoConnect } = require('../db');
+var config = require('../config');
+var url_photo = require('../utils/url_photo');
 
 router.get('/', async function (req, res) {
     if (!req.session) {
@@ -46,11 +48,16 @@ router.get('/', async function (req, res) {
 
         res.json({
             success: true,
-            session: Object.assign({}, req.session, { chats }),
+            session: Object.assign({
+                photo: url_photo(req.session.username)
+            }, req.session, { chats }),
             users: _users.map(user => ({
                 name: user.name,
                 lastname: user.lastname,
-                username: user.username
+                username: user.username,
+                phone: user.phone,
+                description: user.description,
+                photo: url_photo(user.username)
             }))
         });
         conn.close();

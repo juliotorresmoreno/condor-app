@@ -6,6 +6,7 @@ export interface Friend {
     name: string
     lastname: string
     username: string
+    photo: string
 }
 
 export interface FriendList extends Array<Friend> { }

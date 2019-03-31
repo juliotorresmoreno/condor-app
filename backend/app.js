@@ -9,6 +9,8 @@ var authRouter = require('./routes/auth');
 var usersRouter = require('./routes/users');
 var chatsRouter = require('./routes/chats');
 var sessionRouter = require('./routes/session');
+var profileRouter = require('./routes/profile');
+var staticRouter = require('./routes/static');
 
 var app = express();
 
@@ -31,6 +33,8 @@ app.use(function (req, res, next) {
 });
 
 app.use('/auth', authRouter);
+
+app.use('/static', staticRouter);
 
 app.use(async function (req, res, next) {
     try {
@@ -60,6 +64,7 @@ app.use(function (req, res, next) {
 
 app.use('/users', usersRouter);
 app.use('/chats', chatsRouter);
+app.use('/profile', profileRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res) {

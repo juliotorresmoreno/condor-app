@@ -1,0 +1,8 @@
+{
+    "dsn": "mongodb://127.0.0.1:27017/condor",
+    "chat_dsn": "mongodb://127.0.0.1:27017/chats",
+    "phrase": "F5SN74D8IZC02H2Q",
+    "sessions_storage": {},
+    "upload": "/media/upload",
+    "upload_url": "http://127.0.0.1:4000"
+}

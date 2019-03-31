@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from "react";
+import React, { PureComponent, Fragment, CSSProperties } from "react";
 import { connect } from "react-redux";
 import { Chat as ChatItem, ChatList as TChatList } from '../../reducers/chats';
 import ListGroup from "reactstrap/lib/ListGroup";
@@ -14,6 +14,16 @@ interface PropsTypeExtend extends PropsType {
     username: string
     chatList: TChatList
     friendList: FriendList
+}
+
+interface StylesProps {
+    image: CSSProperties
+}
+
+const styles: StylesProps = {
+    image: {
+        height: 30
+    }
 }
 
 const mapProps = (state: any) => ({
@@ -33,33 +43,37 @@ class OChatList extends PureComponent<PropsTypeExtend, any> {
             this.props.onChangeSelect(chat._id);
         }
 
-    renderUsers = (chat: ChatItem): JSX.Element => {
+    renderUser = (username: string, key: number, comma: boolean): JSX.Element | boolean => {
         const friendList = this.props.friendList;
+        if (username === this.props.username || !friendList)
+            return false;
+        const user: Friend | undefined = friendList.find((x: Friend) =>
+            x.username === username
+        );
+        if (!user) return false;
+
+        return (
+            <Fragment key={key}>
+                {comma ? <Fragment>,&nbsp;</Fragment> : false}
+                <span>
+                    {user.photo ? (
+                        <img src={user.photo} style={styles.image} />
+                    ): <i className="far fa-user"></i>}
+                    &nbsp;&nbsp;
+                    {user.name} {user.lastname}
+                </span>
+            </Fragment>
+        );
+    }
+
+    renderUsers = (chat: ChatItem): JSX.Element => {
         var count = 0;
         return (
             <Fragment>
                 {chat.users.map((username: string, key: number) => {
-                    if (username === this.props.username || !friendList)
-                        return false;
-                    const user: Friend | undefined = friendList.find((x: Friend) =>
-                        x.username === username
-                    );
-                    if (!user) return false;
-                    count++;
-                    return (
-                        <Fragment>
-                            {count > 1 ? (
-                                <Fragment>
-                                    ,&nbsp;
-                                </Fragment>
-                            ) : false}
-                            <span key={key}>
-                                <i className="far fa-user"></i>
-                                &nbsp;
-                                {user.name} {user.lastname}
-                            </span>
-                        </Fragment>
-                    );
+                    if (username != this.props.username)
+                        count++;
+                    return this.renderUser(username, key, count > 1)
                 })}
             </Fragment>
         );

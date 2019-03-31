@@ -5,6 +5,7 @@ import { server_url } from '../config';
 import { IUser, IUserError } from '../models/User';
 import { setList as usersSetList } from './users';
 import { setList as friendsSetList } from './friends';
+import fetch from '../utils/fetch';
 interface ILogin {
     email: string
     password: string

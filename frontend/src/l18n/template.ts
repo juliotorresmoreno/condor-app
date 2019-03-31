@@ -32,4 +32,18 @@ export interface Language {
     error_email_is_required: string
 
     add_user_form: string
+
+    profile_title: string
+
+    save_text: string
+
+    cancel_text: string
+
+    photo_tab_title: string
+
+    photo_tab_personal_info: string
+
+    phone: string
+
+    description: string
 }

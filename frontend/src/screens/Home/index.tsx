@@ -17,7 +17,6 @@ import * as chats from '../../actions/chats';
 import { connect } from 'react-redux';
 import ChatList from "../../components/ChatList";
 import DialogUserAdd from "../../components/Dialog/DialogUserAdd";
-import { resolve } from "url";
 
 interface PropsType {
 
@@ -135,7 +134,6 @@ class OHome extends PureComponent<PropsTypeExtend, any> {
                                                 onChangeSelect={this.handleChangeChatSelect}
                                             />
                                         </div>
-                                        <SearchUsersBar />
                                     </TabPane> : false}
                                 {this.state.activeTab == '2' ?
                                     <TabPane className='container-user-list' tabId="2">

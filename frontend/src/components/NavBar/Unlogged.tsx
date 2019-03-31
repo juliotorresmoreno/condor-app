@@ -42,17 +42,25 @@ export default class Unlogged extends PureComponent<PropTypes, StateTypes> {
         return (
             <Fragment>
                 <Navbar color="light" light dark expand="md">
-                    <NavbarBrand href="/">{l18n.brand}</NavbarBrand>
+                    <NavbarBrand href="/">
+                        <i className="fas fa-home"></i>
+                        &nbsp;
+                        {l18n.brand}
+                    </NavbarBrand>
                     <NavbarToggler onClick={this.toggle} />
                     <Collapse isOpen={this.state.isOpen} navbar>
                         <Nav className="ml-auto" navbar>
                             <NavItem className="align-middle">
                                 <Link className="nav-link" to="/login">
+                                    <i className="fas fa-sign-in-alt"></i>
+                                    &nbsp;
                                     {l18n.loginLink}
                                 </Link>
                             </NavItem>
                             <NavItem className="align-middle">
                                 <Link className="nav-link" to="/register">
+                                    <i className="fas fa-user-plus"></i>
+                                    &nbsp;
                                     {l18n.registerLink}
                                 </Link>
                             </NavItem>

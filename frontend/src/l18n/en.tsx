@@ -64,7 +64,21 @@ const lang: Language = {
 
     error_email_is_required: 'El email es obligatorio',
 
-    add_user_form: 'Add user'
+    add_user_form: 'Add user',
+
+    profile_title: 'Profile',
+
+    save_text: 'Save',
+
+    cancel_text: 'Cancel',
+
+    photo_tab_title: 'Photo',
+
+    photo_tab_personal_info: 'Personal info',
+
+    phone: 'Phone',
+
+    description: 'Description'
 }
 
 export default lang;

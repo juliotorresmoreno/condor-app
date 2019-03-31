@@ -14,7 +14,7 @@ import * as auth from '../../actions/auth';
 import { Redirect } from 'react-router';
 
 interface PropsType {
-    
+
 }
 
 interface PropsTypeExtend extends PropsType {
@@ -110,6 +110,8 @@ class OLogin extends PureComponent<PropsTypeExtend, any> {
                                             </Col>
                                         </Row>
                                         <Button>
+                                            <i className="fas fa-sign-in-alt"></i>
+                                            &nbsp;
                                             {l18n.loginButton}
                                         </Button>
                                     </Form>

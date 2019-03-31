@@ -1,4 +1,4 @@
-import React, { PureComponent, Fragment } from 'react';
+import React, { PureComponent, Fragment, CSSProperties } from 'react';
 import {
     Navbar,
     Nav,
@@ -31,12 +31,27 @@ interface PropTypesExtend extends PropTypes {
          * 
          */
         lastname: string
+
+        /**
+         * 
+         */
+        photo: string
     }
 
     /**
      * 
      */
     dispatch: (action: CallableFunction | any) => void
+}
+
+interface StylesProps {
+    photo: CSSProperties
+}
+
+const styles: StylesProps = {
+    photo: {
+        height: 30
+    }
 }
 
 interface StateProps {
@@ -63,6 +78,10 @@ class OLogged extends PureComponent<PropTypesExtend, any> {
 
     handleProfile = (evt: React.MouseEvent<HTMLAnchorElement, MouseEvent>) => {
         evt.preventDefault();
+        this.toggle();
+    }
+
+    toggle = () => {
         this.setState({
             isOpen: !this.state.isOpen
         });
@@ -72,11 +91,14 @@ class OLogged extends PureComponent<PropTypesExtend, any> {
         return (
             <Fragment>
                 <DialogProfile
+                    toggle={this.toggle}
                     isOpen={this.state.isOpen} />
 
                 <Navbar color="light" light dark expand="md">
                     <Link className="navbar-brand" to="/" onClick={this.handleProfile}>
-                        <i className="fas fa-home"></i>
+                        {this.props.auth.photo ?
+                            <img style={styles.photo} src={this.props.auth.photo} /> :
+                            <i className="fas fa-home"></i>}
                         &nbsp;
                         {`${this.props.auth.name} ${this.props.auth.lastname}`}
                     </Link>
@@ -98,6 +120,10 @@ class OLogged extends PureComponent<PropTypesExtend, any> {
 
 const LoggedConnect = connect(mapProps)(OLogged);
 
+/**
+ * 
+ * @param props 
+ */
 const Logged = (props: PropTypes): JSX.Element => <LoggedConnect {...props} />
 
 export default Logged;

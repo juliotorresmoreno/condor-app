@@ -3,6 +3,7 @@
 import { users } from './actionTypes';
 import { server_url } from '../config';
 import { UserList } from '../reducers/users';
+import fetch from '../utils/fetch';
 
 const meta = server_url + '/users';
 

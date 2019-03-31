@@ -3,6 +3,7 @@
 import { chats } from './actionTypes';
 import { server_url } from '../config';
 import { ChatList } from '../reducers/chats';
+import fetch from '../utils/fetch';
 
 const meta = server_url + '/chats';
 

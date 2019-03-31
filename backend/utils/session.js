@@ -29,6 +29,8 @@ module.exports = async function (token) {
                 lastname: data.lastname,
                 username: data.username,
                 email: data.email,
+                phone: data.phone,
+                description: data.description,
                 chats: data.chats || []
             });
         });
