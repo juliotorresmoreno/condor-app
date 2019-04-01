@@ -6,6 +6,7 @@ export interface User {
     name: string
     lastname: string
     username: string
+    photo?: string
 }
 
 export interface UserList extends Array<User> { }

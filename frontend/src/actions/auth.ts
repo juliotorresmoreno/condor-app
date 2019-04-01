@@ -32,62 +32,56 @@ export const logout = () => ({
 });
 
 export const login = (user: ILogin) =>
-    (dispatch: CallableFunction, getState: CallableFunction) => {
-        return fetch(meta + '/login', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-            .then((response) => {
-                return response.json()
-                    .then((result) => {
-                        if (response.ok) {
-                            dispatch(logged(result.data));
-                            dispatch(session());
-                            return Promise.resolve();
-                        }
-                        return Promise.reject(new Error(result.message));
-                    })
-            })
-            .catch((error: Error) => {
-                return Promise.reject(error);
+    async (dispatch: CallableFunction, getState: CallableFunction) => {
+        try {
+            const response = await fetch(meta + '/login', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
             });
+            const result = await response.json();
+            if (response.ok) {
+                dispatch(logged(result.data));
+                dispatch(session());
+                return Promise.resolve();
+            }
+            throw new Error(result.message)
+        } catch (error) {
+            throw error;
+        }
     }
 
 export const register = (user: IUser) =>
-    (dispatch: CallableFunction, getState: CallableFunction) => {
-        return fetch(meta + '/register', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(user)
-        })
-            .then((response) => {
-                return response.json()
-                    .then((data) => {
-                        if (response.ok) {
-                            return Promise.resolve();
-                        }
-                        if (data.errors != undefined) {
-                            let error: IUserError = {
-                                $name: data.errors.$name ? new Error(data.errors.$name) : undefined,
-                                $lastname: data.errors.$lastname ? new Error(data.errors.$lastname) : undefined,
-                                $username: data.errors.$username ? new Error(data.errors.$username) : undefined,
-                                $email: data.errors.$email ? new Error(data.errors.$email) : undefined,
-                                $password: data.errors.$password ? new Error(data.errors.$password) : undefined,
-                                $length: data.errors.$length
-                            };
-                            return Promise.reject(error);
-                        }
-                        return Promise.reject(new Error(data.message));
-                    })
+    async (dispatch: CallableFunction, getState: CallableFunction) => {
+        try {
+            const response = await fetch(meta + '/register', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json'
+                },
+                body: JSON.stringify(user)
             })
-            .catch((error: Error) => {
-                return Promise.reject(error);
-            });
+            const data = await response.json();
+            if (response.ok) {
+                return;
+            }
+            if (data.errors != undefined) {
+                let error: IUserError = {
+                    $name: data.errors.$name ? new Error(data.errors.$name) : undefined,
+                    $lastname: data.errors.$lastname ? new Error(data.errors.$lastname) : undefined,
+                    $username: data.errors.$username ? new Error(data.errors.$username) : undefined,
+                    $email: data.errors.$email ? new Error(data.errors.$email) : undefined,
+                    $password: data.errors.$password ? new Error(data.errors.$password) : undefined,
+                    $length: data.errors.$length
+                };
+                throw error;
+            }
+            throw new Error(data.message);
+        } catch (error) {
+            throw error;
+        }
     }
 
 

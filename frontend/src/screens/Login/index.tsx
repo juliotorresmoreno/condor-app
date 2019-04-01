@@ -61,7 +61,17 @@ class OLogin extends PureComponent<PropsTypeExtend, any> {
         this.props.dispatch(auth.login({
             email: this.state.email,
             password: this.state.password
-        }));
+        })).catch((error: Error) => {
+            if (error.message) {
+                this.setState({
+                    error: error
+                });
+                return;
+            }
+            this.setState({
+                error: new Error('User or password is invalid.')
+            });
+        });
     }
 
     render() {

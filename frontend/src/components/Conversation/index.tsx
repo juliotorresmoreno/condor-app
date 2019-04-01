@@ -8,6 +8,8 @@ import * as chats from '../../actions/chats';
 import { Message } from '../../reducers/chats';
 import { StateProps as AuthProps } from '../../reducers/auth';
 import { FriendList } from '../../reducers/friends';
+import BrowserDetection from '../../utils/browser';
+import { detect } from 'detect-browser';
 
 interface PropsType {
     chatID: string
@@ -32,6 +34,19 @@ const mapProps = (state: any) => ({
     friendList: state.friends.list
 });
 
+const browser = detect();
+
+const resizes = (): number => {
+    const height = document.documentElement.offsetHeight;
+    if (!browser) return 200;
+    switch (browser.name) {
+        case 'chrome':
+            return height - 210;
+        case 'firefox':
+            return height - 190;
+    }
+    return 200;
+}
 class OConversation extends PureComponent<PropsTypeExtend, any> {
 
     static defaultProps = {
@@ -45,9 +60,6 @@ class OConversation extends PureComponent<PropsTypeExtend, any> {
     elem: HTMLDivElement | null = null;
 
     componentDidUpdate() {
-        //if (!this.props.chatsCache[this.props.chatID]) {
-        //this.props.dispatch(chats.load(this.props.chatID));
-        //}
         if (this.elem !== null) {
             this.elem.scrollTop = 1000 * 1000 * 1000;
         }
@@ -108,12 +120,12 @@ class OConversation extends PureComponent<PropsTypeExtend, any> {
 
     render() {
         const messages = this.props.chatsCache[this.props.chatID] || [];
-        const height = document.documentElement.offsetHeight;
+        const height = resizes();
         return (
             <Fragment>
                 <div style={this.props.style} className="container-card-conversation">
                     <Card body className="card-conversation">
-                        <div ref={(elem) => this.elem = elem} style={{ height: height - 190, overflowY: 'scroll' }}>
+                        <div ref={(elem) => this.elem = elem} style={{ height: height, overflowY: 'scroll' }}>
                             {messages.map(this.renderMessage)}
                         </div>
                     </Card>

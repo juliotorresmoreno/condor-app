@@ -144,6 +144,7 @@ class ODialogProfile extends PureComponent<PropsTypeExtend, any> {
                     </ModalBody>
                     <ModalFooter>
                         <Button
+                            className='save'
                             color="primary"
                             style={styles.button}
                             onClick={this.handleSaveClick}>

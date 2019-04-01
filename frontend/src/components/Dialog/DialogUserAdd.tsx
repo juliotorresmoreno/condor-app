@@ -42,7 +42,7 @@ const styles: StylesProps = {
         overflowX: 'auto'
     },
     actionButton: {
-        width: 100
+        width: 110
     }
 };
 

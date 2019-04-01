@@ -38,6 +38,7 @@ const mapProps = (state: any) => ({
 interface StylesProps {
     conversation: CSSProperties
     conversation_container: CSSProperties
+    row_conversation_container: CSSProperties
     actions: CSSProperties
 }
 
@@ -46,6 +47,9 @@ const styles: StylesProps = {
         display: 'flex',
         flex: 1
         //flexDirection: 'column'
+    },
+    row_conversation_container: {
+        marginBottom: -5
     },
     conversation: {
         flex: 1
@@ -92,7 +96,7 @@ class OHome extends PureComponent<PropsTypeExtend, any> {
                 <br />
 
                 <Container className="chat-container">
-                    <Row>
+                    <Row style={styles.row_conversation_container}>
                         <Col style={styles.conversation_container} md={{ size: 8 }}>
                             <div style={styles.actions}>
                                 <DialogUserAdd chatID={this.state.activeChat} />

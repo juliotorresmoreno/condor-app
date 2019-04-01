@@ -1,6 +1,6 @@
 
 
-import React, { PureComponent } from "react";
+import React, { PureComponent, CSSProperties } from "react";
 import ListGroup from "reactstrap/lib/ListGroup";
 import ListGroupItem from "reactstrap/lib/ListGroupItem";
 import { connect } from 'react-redux';
@@ -26,6 +26,17 @@ const mapProps = (state: any) => ({
     friendList: state.friends.list
 });
 
+
+interface StylesProps {
+    image: CSSProperties
+}
+
+const styles: StylesProps = {
+    image: {
+        height: 30
+    }
+}
+
 class OUserList extends PureComponent<PropsTypeExtend> {
 
     state: StateProps = {
@@ -45,14 +56,16 @@ class OUserList extends PureComponent<PropsTypeExtend> {
         const userList = this.props.userList;
         return (
             <ListGroup>
-                {userList.map((value, key) => (
+                {userList.map((user, key) => (
                     <ListGroupItem
                         key={key}
-                        active={this.state.active === value.username}
-                        onClick={this.handleClick(value.username)}>
-                        <i className="far fa-user"></i>
-                        &nbsp;
-                        {value.name} {value.lastname}
+                        active={this.state.active === user.username}
+                        onClick={this.handleClick(user.username)}>
+                        {user.photo ? (
+                            <img src={user.photo} style={styles.image} />
+                        ): <i className="far fa-user"></i>}
+                        &nbsp;&nbsp;
+                        {user.name} {user.lastname}
                     </ListGroupItem>
                 ))}
             </ListGroup>

@@ -138,7 +138,7 @@ class OFormProfile extends PureComponent<PropsTypeExtend, any> {
                     <NavItem>
                         <NavLink
                             onClick={this.toggleTab('2')}
-                            className={active.tab2}>
+                            className={`tab_personal_info ${active.tab2}`}>
                             {l18n.photo_tab_personal_info}
                         </NavLink>
                     </NavItem>

@@ -14,11 +14,11 @@ const lang = {
     save: 'Save',
 
     error_name_is_invalid: 'The name is invalid',
-    error_lastname_is_invalid: 'The name is invalid',
-    error_username_is_invalid: 'The name is invalid',
-    error_email_is_invalid: 'The name is invalid',
-    error_password_is_invalid: 'The name is invalid',
-    error_password_confirmation_is_invalid: 'The name is invalid',
+    error_lastname_is_invalid: 'The lastname is invalid',
+    error_username_is_invalid: 'The username is invalid',
+    error_email_is_invalid: 'The email is invalid',
+    error_password_is_invalid: 'The password is invalid',
+    error_password_confirmation_is_invalid: 'The password is invalid',
 
     error_internal_server: "Internal server error",
 

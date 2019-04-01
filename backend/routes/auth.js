@@ -34,12 +34,13 @@ router.post('/register', async function (req, res) {
         }
         client = await mongoConnect();
     } catch (error) {
-        console.trace(err);
+        console.trace(error);
         res.status(500);
         res.json({
             success: false,
             message: l18n.error_internal_server
         });
+        return;
     }
 
     var conn = client.conn,
@@ -100,6 +101,14 @@ router.post('/login', async function (req, res) {
         db = client.db;
     try {
         const data = await db.collection('users').find(user_data).toArray();
+        if (data.length == 0) {
+            res.status(401);
+            res.json({
+                success: false,
+                message: 'User or password is invalid'
+            });
+            return;
+        }
         let token = UUID();
         let client = redis.createClient(config.sessions_storage);
         client.SET(token, data[0]._id, function (err) {
